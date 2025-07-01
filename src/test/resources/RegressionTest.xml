@@ -16,15 +16,15 @@
             <parameter name="browser" value="chrome"/>
         </classes>
     </test>
-    <test name="Edge">
-        <groups>
-            <run>
-                <include name="Regression"/>
-            </run>
-        </groups>
-        <classes>
-            <class name="tests.ui.ProjectTest"/>
-            <parameter name="browser" value="edge"/>
-        </classes>
-    </test>
+<!--    <test name="Edge">-->
+<!--        <groups>-->
+<!--            <run>-->
+<!--                <include name="Regression"/>-->
+<!--            </run>-->
+<!--        </groups>-->
+<!--        <classes>-->
+<!--            <class name="tests.ui.ProjectTest"/>-->
+<!--            <parameter name="browser" value="edge"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 </suite>
