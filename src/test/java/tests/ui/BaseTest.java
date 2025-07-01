@@ -5,7 +5,7 @@ import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.testng.annotations.*;
 import pages.LoginPage;
 import pages.ProjectPage;
@@ -41,7 +41,7 @@ public class BaseTest {
         } else if (browser.equalsIgnoreCase("edge")) {
             log.info("Starting Edge browser");
             Configuration.browser = "edge";
-            Configuration.browserCapabilities = getFirefoxOptions();
+            Configuration.browserCapabilities = getEdgeOptions();
         }
 
         Configuration.baseUrl = "https://app.qase.io";
@@ -65,10 +65,10 @@ public class BaseTest {
         options.addArguments("--disable-notifications");
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--disable-infobars");
-//        options.addArguments("--headless");
-//        options.addArguments("--no-sandbox");
-//        options.addArguments("--disable-dev-shm-usage");
-//        options.addArguments("--disable-gpu");
+        options.addArguments("--headless");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-gpu");
         options.addArguments("--start-maximized");
         options.addArguments("--disable-blink-features=AutomationControlled");
         options.setExperimentalOption("excludeSwitches",
@@ -76,9 +76,17 @@ public class BaseTest {
         return options;
     }
 
-    private static FirefoxOptions getFirefoxOptions() {
-        FirefoxOptions options = new FirefoxOptions();
+    private static EdgeOptions getEdgeOptions() {
+        EdgeOptions options = new EdgeOptions();
         options.addArguments("--start-maximized");
+        options.addArguments("--headless");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--start-maximized");
+        options.addArguments("--disable-blink-features=AutomationControlled");
+        options.setExperimentalOption("excludeSwitches",
+                Collections.singletonList("enable-automation"));
         return options;
     }
 

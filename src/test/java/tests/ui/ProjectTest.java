@@ -9,17 +9,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProjectTest extends BaseTest{
 
-    @Test(testName = "Проверка удаления проекта", groups = {"Smoke", "Regression"})
-    @Description("Проверяет, возможность удаления проекта через UI")
-    @Step("Удаление проекта")
-    public void checkDeletingProject() {
-        loginStep.auth(user, password);
-        projectPage.deleteProject("Qase");
-
-        assertThat(projectPage.getProjectsList())
-                .doesNotContain("Qase");
-    }
-
     @Test(testName = "Проверка создания проекта", groups = {"Smoke", "Regression"})
     @Description("Проверяет, возможность создания проекта через UI")
     @Step("Coздание проекта")
@@ -36,13 +25,23 @@ public class ProjectTest extends BaseTest{
     @Step("Добавление чек-листа в проект")
     public void checkCreatingCheckList() {
         loginStep.auth(user, password);
-        projectPage.createProject("Test")
-                .openProject("Test")
+        projectPage.openProject("Test")
                 .isProjectOpened()
                 .createSuit("Test")
                 .addCheckList("Successful Login", "Login with empty fields", "Check creating project");
 
         assertThat(projectPage.getCheckList())
                 .contains("Successful Login", "Login with empty fields", "Check creating project");
+    }
+
+    @Test(testName = "Проверка удаления проекта", groups = {"Smoke", "Regression"})
+    @Description("Проверяет, возможность удаления проекта через UI")
+    @Step("Удаление проекта")
+    public void checkDeletingProject() {
+        loginStep.auth(user, password);
+        projectPage.deleteProject("Test");
+
+        assertThat(projectPage.getProjectsList())
+                .doesNotContain("Test");
     }
 }

@@ -19,6 +19,7 @@ public class ProjectPage {
     public ProjectPage openPage() {
         log.info("Opening ProjectPage...");
         open("/projects");
+
         return this;
     }
 
@@ -30,14 +31,21 @@ public class ProjectPage {
             log.error(e.getMessage());
             Assert.fail("ProjectPage isn't opened");
         }
+
         return this;
     }
 
     public ProjectPage createProject(String projectName) {
-        log.info("Create project '{}'", projectName);
-        $(byText("Create new project")).click();
-        $("#project-name").setValue(projectName);
-        $(byText("Create project")).click();
+        log.info("Creating project '{}'", projectName);
+        if (!getProjectsList().contains(projectName)) {
+            $(byText("Create new project")).click();
+            $("#project-name").setValue(projectName);
+            $(byText("Create project")).click();
+            log.info("Project '{}' is created", projectName);
+        } else {
+            log.info("A project with that name already exists.");
+        }
+
         return this;
     }
 
@@ -60,13 +68,25 @@ public class ProjectPage {
     public List<String> getProjectsList() {
         log.info("Getting project names...");
         refresh();
-        $x("//a//img").shouldBe(visible);
-        return $$x("//a//img").attributes("alt");
+
+        $(byText("Loading...")).shouldBe(visible);
+        $(byText("Loading...")).shouldNotBe(visible);
+
+        if ($(byText("Looks like you don’t have any projects yet.")).isDisplayed()) {
+            log.info("Projects not found!");
+
+            return new ArrayList<>();
+        } else {
+            log.info("Project names: {}", $$x("//a//img").attributes("alt"));
+
+            return $$x("//a//img").attributes("alt");
+        }
     }
 
     public ProjectPage openProject(String projectName) {
         log.info("Opening project '{}'", projectName);
         $(byText(projectName)).click();
+
         return this;
     }
 
@@ -78,6 +98,7 @@ public class ProjectPage {
             log.error(e.getMessage());
             Assert.fail("Project isn't opened");
         }
+
         return this;
     }
 
@@ -86,6 +107,7 @@ public class ProjectPage {
         $(byText("Create new suite")).click();
         $("#title").setValue(suitName);
         $(byText("Create")).click();
+
         return this;
     }
 
@@ -106,11 +128,12 @@ public class ProjectPage {
         refresh();
         $("input[placeholder='+ Create quick test']").shouldBe(visible);
         ElementsCollection ids = $$x("//div[@id='suitecases-container']//a");
-        List<String>  testsName = new ArrayList<>();
+        List<String> testsName = new ArrayList<>();
         for (SelenideElement id : ids) {
-           testsName.add($x(String.format(
-                   "//a[text()='%s']/parent::div/parent::div/following-sibling::div", id.getText())).getText());
+            testsName.add($x(String.format(
+                    "//a[text()='%s']/parent::div/parent::div/following-sibling::div", id.getText())).getText());
         }
+
         return testsName;
     }
 }
