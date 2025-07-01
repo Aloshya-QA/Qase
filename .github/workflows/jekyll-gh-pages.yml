@@ -9,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      USER: ${{secrets.SD_USER}}
-      PASS: ${{secrets.SD_PASSWORD}}
+      USER: ${{secrets.USER}}
+      PASS: ${{secrets.PASSWORD}}
     
     steps:
     - name: Checkout
