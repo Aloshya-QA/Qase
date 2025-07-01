@@ -12,7 +12,7 @@
             </run>
         </groups>
         <classes>
-            <class name="tests.ProjectTest"/>
+            <class name="tests.ui.ProjectTest"/>
             <parameter name="browser" value="chrome"/>
         </classes>
     </test> <!-- Test -->
@@ -23,7 +23,7 @@
             </run>
         </groups>
         <classes>
-            <class name="tests.ProjectTest"/>
+            <class name="tests.ui.ProjectTest"/>
             <parameter name="browser" value="firefox"/>
         </classes>
     </test> <!-- Test -->

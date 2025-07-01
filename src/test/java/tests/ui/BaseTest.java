@@ -1,13 +1,15 @@
-package tests;
+package tests.ui;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.testng.ITestResult;
 import org.testng.annotations.*;
 import pages.LoginPage;
 import pages.ProjectPage;
+import steps.LoginStep;
 import utils.PropertyReader;
 import utils.TestListener;
 
@@ -15,13 +17,14 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
-import static utils.AllureUtils.takeScreenshot;
 
+@Log4j2
 @Listeners(TestListener.class)
 public class BaseTest {
 
     LoginPage loginPage;
     ProjectPage projectPage;
+    LoginStep loginStep;
 
     String user = System.getProperty("user", PropertyReader.getProperty("user"));
     String password = System.getProperty("password", PropertyReader.getProperty("password"));
@@ -29,16 +32,15 @@ public class BaseTest {
     @Parameters({"browser"})
     @BeforeMethod(alwaysRun = true)
     public void setup(@Optional("chrome") String browser) {
-        new AllureSelenide()
-                .screenshots(true)
-                .savePageSource(false)
-                .includeSelenideSteps(false);
+        SelenideLogger.addListener("AllureSelenide",new AllureSelenide());
 
         if (browser.equalsIgnoreCase("chrome")) {
+            log.info("Starting Chrome browser");
             Configuration.browser = "chrome";
             Configuration.browserCapabilities = getChromeOptions();
-        } else if (browser.equalsIgnoreCase("firefox")) {
-            Configuration.browser = "firefox";
+        } else if (browser.equalsIgnoreCase("edge")) {
+            log.info("Starting Edge browser");
+            Configuration.browser = "edge";
             Configuration.browserCapabilities = getFirefoxOptions();
         }
 
@@ -49,9 +51,11 @@ public class BaseTest {
 
         loginPage = new LoginPage();
         projectPage = new ProjectPage();
+        loginStep = new LoginStep();
     }
 
     private static ChromeOptions getChromeOptions() {
+        log.info("Init chrome options");
         ChromeOptions options = new ChromeOptions();
         HashMap<String, Object> chromePrefs = new HashMap<>();
         chromePrefs.put("credentials_enable_service", false);
@@ -79,12 +83,9 @@ public class BaseTest {
     }
 
     @AfterMethod(alwaysRun = true)
-    public void TearDawn(ITestResult result) throws InterruptedException {
-        if (ITestResult.FAILURE == result.getStatus()) {
-            takeScreenshot(getWebDriver());
-        }
-
+    public void TearDawn() {
         if ( getWebDriver() != null) {
+            log.info("Closing browser");
             getWebDriver().quit();
         }
     }

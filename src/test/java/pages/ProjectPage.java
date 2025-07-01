@@ -2,8 +2,7 @@ package pages;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.SetValueOptions;
-import org.jspecify.annotations.Nullable;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 
@@ -14,18 +13,28 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
+@Log4j2
 public class ProjectPage {
 
-    public void openPage() {
+    public ProjectPage openPage() {
+        log.info("Opening ProjectPage...");
         open("/projects");
+        return this;
     }
 
-    public ProjectPage waitTillOpened() {
-        $(byText("Create new project")).shouldBe(visible);
+    public ProjectPage isOpened() {
+        try {
+            $(byText("Create new project")).shouldBe(visible);
+            log.info("ProjectPage is opened");
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            Assert.fail("ProjectPage isn't opened");
+        }
         return this;
     }
 
     public ProjectPage createProject(String projectName) {
+        log.info("Create project '{}'", projectName);
         $(byText("Create new project")).click();
         $("#project-name").setValue(projectName);
         $(byText("Create project")).click();
@@ -33,6 +42,7 @@ public class ProjectPage {
     }
 
     public ProjectPage deleteProject(String projectName) {
+        log.info("Delete project '{}'", projectName);
         if (getProjectsList().contains(projectName)) {
             $(byText(projectName))
                     .ancestor("tr")
@@ -48,22 +58,31 @@ public class ProjectPage {
     }
 
     public List<String> getProjectsList() {
+        log.info("Getting project names...");
         refresh();
         $x("//a//img").shouldBe(visible);
         return $$x("//a//img").attributes("alt");
     }
 
     public ProjectPage openProject(String projectName) {
+        log.info("Opening project '{}'", projectName);
         $(byText(projectName)).click();
         return this;
     }
 
     public ProjectPage isProjectOpened() {
-        $(byText("Create new suite")).shouldBe(visible);
+        try {
+            $(byText("Create new suite")).shouldBe(visible);
+            log.info("Project is opened");
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            Assert.fail("Project isn't opened");
+        }
         return this;
     }
 
     public ProjectPage createSuit(String suitName) {
+        log.info("Create suit '{}'", suitName);
         $(byText("Create new suite")).click();
         $("#title").setValue(suitName);
         $(byText("Create")).click();
@@ -71,6 +90,7 @@ public class ProjectPage {
     }
 
     public ProjectPage addCheckList(String... testsName) {
+        log.info("Add Check List '{}'", (Object) testsName);
         $("input[placeholder='+ Create quick test']").click();
         for (String testName : testsName) {
             $("input[placeholder='Test case title']")
@@ -82,6 +102,7 @@ public class ProjectPage {
     }
 
     public List<String> getCheckList() {
+        log.info("Getting Check List...");
         refresh();
         $("input[placeholder='+ Create quick test']").shouldBe(visible);
         ElementsCollection ids = $$x("//div[@id='suitecases-container']//a");
