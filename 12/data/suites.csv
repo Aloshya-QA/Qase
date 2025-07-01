@@ -1,0 +1,5 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"Проверяет, возможность удаления проекта через UI","12000","checkDeletingProject","Surefire suite","Tue Jul 01 21:51:05 GMT 2025","failed","Tue Jul 01 21:51:17 GMT 2025","tests.ui.ProjectTest","Surefire test","tests.ui.ProjectTest","checkDeletingProject"
+"Проверяет, что в проект можно добавить чек-лист","8913","checkCreatingCheckList","Surefire suite","Tue Jul 01 21:50:56 GMT 2025","passed","Tue Jul 01 21:51:05 GMT 2025","tests.ui.ProjectTest","Surefire test","tests.ui.ProjectTest","checkCreatingCheckList"
+"Проверяет, возможность создания проекта через UI","9136","checkCreateProject","Surefire suite","Tue Jul 01 21:50:47 GMT 2025","passed","Tue Jul 01 21:50:56 GMT 2025","tests.ui.ProjectTest","Surefire test","tests.ui.ProjectTest","checkCreateProject"
+"","3076","checkCreateProject","Surefire suite","Tue Jul 01 21:50:44 GMT 2025","passed","Tue Jul 01 21:50:47 GMT 2025","tests.api.ProjectAPITest","Surefire test","tests.api.ProjectAPITest","checkCreateProject"
