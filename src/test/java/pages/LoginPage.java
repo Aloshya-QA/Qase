@@ -14,6 +14,7 @@ public class LoginPage {
     public LoginPage openPage() {
         log.info("Opening LoginPage...");
         open("/login");
+
         return this;
     }
 
@@ -25,6 +26,7 @@ public class LoginPage {
             log.error(e.getMessage());
             Assert.fail("LoginPage isn't opened");
         }
+
         return this;
     }
 
@@ -33,6 +35,7 @@ public class LoginPage {
         $("[name=email]").setValue(username);
         $("[name=password]").setValue(password);
         $(byText("Sign in")).click();
+
         return new ProjectPage();
     }
 }

@@ -11,7 +11,7 @@ jobs:
 
     env:
       USER: ${{secrets.USER}}
-      PASS: ${{secrets.PASSWORD}}
+      PASSWORD: ${{secrets.PASSWORD}}
 
     steps:
       - name: Checkout
@@ -24,7 +24,11 @@ jobs:
           cache: maven
 
       - name: Run tests
-        run: mvn clean test -DsuiteXmlFile='src/test/resources/RegressionTest.xml'
+        run: |
+          mvn clean test 
+          -DsuiteXmlFile='src/test/resources/RegressionTest.xml'
+          -Duser=$USER 
+          -Dpassword=$PASSWORD
 
       - name: Get Allure history
         uses: actions/checkout@v2
