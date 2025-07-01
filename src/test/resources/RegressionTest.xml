@@ -2,9 +2,8 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite thread-count="1" name="Qase Regression Test" parallel="tests">
     <listeners>
-<!--        <listener class-name="utils.TestListener"/>-->
-<!--        <listener class-name="utils.AnnotationTransformer"/>-->
-        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+        <listener class-name="utils.TestListener"/>
+        <listener class-name="utils.AnnotationTransformer"/>
     </listeners>
     <test name="Chrome">
         <groups>
