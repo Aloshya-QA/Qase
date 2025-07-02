@@ -9,7 +9,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProjectTest extends BaseTest{
 
-    @Test(testName = "Проверка создания проекта", groups = {"Smoke", "Regression"})
+    @Test(
+            testName = "Проверка создания проекта",
+            groups = {"Smoke", "Regression"}
+    )
     @Description("Проверяет, возможность создания проекта через UI")
     @Step("Coздание проекта")
     public void checkCreateProject() {
@@ -20,7 +23,11 @@ public class ProjectTest extends BaseTest{
                 .contains("Test");
     }
 
-    @Test(testName = "Проверка добавления чек-листа", groups = {"Smoke", "Regression"})
+    @Test(
+            testName = "Проверка добавления чек-листа",
+            groups = {"Smoke", "Regression"},
+            priority = 1
+    )
     @Description("Проверяет, что в проект можно добавить чек-лист")
     @Step("Добавление чек-листа в проект")
     public void checkCreatingCheckList() {
@@ -34,7 +41,11 @@ public class ProjectTest extends BaseTest{
                 .contains("Successful Login", "Login with empty fields", "Check creating project");
     }
 
-    @Test(testName = "Проверка удаления проекта", groups = {"Smoke", "Regression"})
+    @Test(
+            testName = "Проверка удаления проекта",
+            groups = {"Smoke", "Regression"},
+            priority = 2
+    )
     @Description("Проверяет, возможность удаления проекта через UI")
     @Step("Удаление проекта")
     public void checkDeletingProject() {
